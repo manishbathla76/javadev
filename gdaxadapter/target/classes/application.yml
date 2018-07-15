@@ -1,0 +1,12 @@
+ gdax:
+  api:
+    baseUrl: "https://api-public.sandbox.gdax.com/"
+    key: "ba8b6349a5f87b2e12462b05150eed13"
+    secret: "lwks2xnrHDK+SuKaS6bAwti/5FKnru7kPDJK4MUAGdYVIj3SHeNlEhLrjfRu43YNOtM++rkafunrD8ruYWtGeg=="
+    passphrase: "ahwyyx4h8ca"
+
+ websocket:
+  baseUrl: "wss://ws-feed-public.sandbox.gdax.com/"
+
+ gui:
+  enabled: false

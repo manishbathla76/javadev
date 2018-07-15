@@ -1,0 +1,66 @@
+package com.moneymachine.spring.DataLoader.tradeaggregator;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
+import com.moneymachine.spring.transform.DoublePreProcessorRule;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.bean.ColumnPositionMappingStrategy;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.enums.CSVReaderNullFieldIndicator;
+
+public class TradeKingTradeFileReader implements TradeFileReader{
+
+	static final Logger logger = LogManager.getLogger(TradeKingTradeFileReader.class.getName());
+	private static final int SKIP_LINES_COUNT = 1;
+	public List<TradePojo> getTradeData(File tradeFile){
+			List<TradePojo> results = new ArrayList<TradePojo>();
+		
+		if(!tradeFile.exists()){
+			logger.error("File " + tradeFile + " does not exist.");
+		}
+		
+		FileReader fileReader;
+		try {
+			fileReader = new FileReader(tradeFile);
+			
+			//CSVReader reader = new CSVReader(fileReader,',', '\'', SKIP_LINES_COUNT);
+			CSVReader reader = new CSVReaderBuilder(fileReader)
+		    .withFieldAsNull(CSVReaderNullFieldIndicator.BOTH)
+		    .withSkipLines(SKIP_LINES_COUNT)
+		    .build();
+			ColumnPositionMappingStrategy<TradePojo> strat = new ColumnPositionMappingStrategy<TradePojo>();
+		    strat.setType(TradePojo.class);
+		    String[] columns = new String[] {"tradeDateStr","action","qty","symbol","desc","price","commision","fee","amount"}; // the fields to bind do in your JavaBean
+		    strat.setColumnMapping(columns);
+
+		    CsvToBean<TradePojo> csv = new CsvToBean<TradePojo>();
+		    results = csv.parse(strat, reader);
+		    
+		    results = results.stream().filter(p-> p.isTrade()).collect(Collectors.toList());
+		    
+		    //post processing
+		    for(TradePojo p:results){
+		    	DoublePreProcessorRule rule = new DoublePreProcessorRule();
+		    		p.setPrice(rule.preProcess(p.getPrice()).toString());
+		    		p.setAmount(rule.preProcess(p.getAmount()).toString());
+		    		p.setFee(rule.preProcess(p.getFee()).toString());
+		    		p.setCommision(rule.preProcess(p.getCommision()).toString());
+		    }
+		    
+		} catch (FileNotFoundException e) {
+			logger.error("Error reading the file " + tradeFile.getName());
+			e.printStackTrace();
+		}
+		
+	    return results;
+	}
+}

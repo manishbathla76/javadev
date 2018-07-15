@@ -1,0 +1,39 @@
+package com.moneymachine.commontools.extractorutil;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class FileUtility {
+	
+		public static File[] getFiles(){
+			File folder = new File(Setting.DEST_DIR);
+			File[] files = folder.listFiles();
+			return files;
+		}
+		
+		public static List<String> getFileNames(){
+			File[] files = getFiles();
+			List<File> fileList = files.asList();
+			List<String> names = fileList.stream().map(f -> f.getName()).collect(Collectors.toList());
+			return names;
+		}
+		
+		public static ArrayList<String> getUncompressedFileNames(){
+			ArrayList<String> filesName = new ArrayList<String>();
+			return filesName;
+		}
+		
+		public static void compressUncompressedFiles(){
+			
+		}
+		
+		public static Byte[] getFileContents(String fileName){
+			return null;
+		}
+		
+		
+		
+}

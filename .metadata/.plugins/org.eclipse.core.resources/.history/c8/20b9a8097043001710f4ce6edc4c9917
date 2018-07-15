@@ -1,0 +1,183 @@
+package com.moneymachine.spring.DataLoader.tradeaggregator;
+
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
+public class TradePojo implements TradeData{
+
+	
+	static final Logger logger = LogManager.getLogger(TradePojo.class.getName());
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String tradeDateStr;
+	private String action;
+	private String symbol;
+	private String desc;
+	private String securityType;
+	private String qty;
+	private String price;
+	private String commision;
+	private String fee;
+	private String interest;
+	private String amount;
+	private String settlementDate;
+	
+	
+	public String tradeDateStr() {
+		return tradeDateStr;
+	}
+	public void setTradeDateStr(String tradeDate) {
+		this.tradeDateStr = tradeDate;
+	}
+	public String getAction() {
+		return action;
+	}
+	public void setAction(String action) {
+		this.action = action;
+	}
+	
+	public String getTicker(){
+		return symbol;
+	}
+	public String getSymbol() {
+		return symbol;
+	}
+	public void setSymbol(String symbol) {
+		if(symbol!=null)
+			this.symbol = symbol.trim();
+		
+	}
+	public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+	public String getSecurityType() {
+		return securityType;
+	}
+	public void setSecurityType(String securityType) {
+		this.securityType = securityType;
+	}
+	public String getQty() {
+		return qty;
+	}
+	public void setQty(String qty) {
+		this.qty = qty;
+	}
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
+	}
+	public String getCommision() {
+		return commision;
+	}
+	public void setCommision(String commision) {
+		this.commision = commision;
+	}
+	public String getFee() {
+		return fee;
+	}
+	public void setFee(String fee) {
+		this.fee = fee;
+	}
+	public String getInterest() {
+		return interest;
+	}
+	public void setInterest(String interest) {
+		this.interest = interest;
+	}
+	public String getAmount() {
+		return amount;
+	}
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+	public String getSettlementDate() {
+		return settlementDate;
+	}
+	public void setSettlementDate(String settlementDate) {
+		this.settlementDate = settlementDate;
+	}
+	
+	public String getBuySell(){
+		return this.action.trim().equalsIgnoreCase("YOU BOUGHT") ||  this.action.trim().equalsIgnoreCase("Bought") ? "BUY" : "SELL";
+		
+	}
+	
+	public boolean isTrade(){
+		if(action==null)
+			return false;
+		
+		return this.action.trim().equalsIgnoreCase("YOU BOUGHT") || this.action.trim().equalsIgnoreCase("YOU SOLD")
+				||  this.action.trim().equalsIgnoreCase("Bought") || this.action.trim().equalsIgnoreCase("Sold")
+				;
+	}
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public int getTradeDate(){
+		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat out = new SimpleDateFormat("yyyyddMM");
+		Date date = new Date();
+		try{
+		 date = df.parse(this.tradeDateStr);
+		 String intdatestr = out.format(date);
+		 return Integer.parseInt(intdatestr);
+		}catch(Exception e){
+			logger.error("issue with parsing trade date " + e);
+		}
+		
+		return -1;
+	}
+
+	public String getSecutityType(){
+		return this.securityType;
+	}
+	public String getDescription(){
+		return this.desc;
+	}
+	public double getQuantity(){
+		return Double.parseDouble(this.qty);
+	}
+	public double getPricePerUnitPaid(){
+		return Double.parseDouble(this.price);
+	}
+	
+	
+	public double getCommisionAndFeePaid(){
+		double comm = 0.0;
+		double fee = 0.0;
+		
+		try{
+			if(this.commision!=null)
+				comm = Double.parseDouble(this.commision);
+		}catch(Exception e){
+			//logger.error("issue with parsing commision " + e);
+		}
+		
+		try{
+			if(this.fee!=null)
+				comm = Double.parseDouble(this.fee);
+		}catch(Exception e){
+			//logger.error("issue with parsing fee " + e);
+		}
+		return comm + fee;
+		
+	}
+	
+	
+
+}

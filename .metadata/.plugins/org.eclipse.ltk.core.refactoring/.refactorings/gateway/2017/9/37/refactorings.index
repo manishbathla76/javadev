@@ -1,0 +1,12 @@
+1505082502484	Move compilation unit
+1505098455400	Rename type 'QuoteReader'
+1505180084825	Rename type 'KrakenOrderBookPojo'
+1505579938743	Delete element
+1505580764775	Rename type 'KrakenPriceReader'
+1505581667953	Delete element
+1505582562288	Copy compilation unit
+1505582580469	Rename type 'GDAXRestDataTask'
+1505582605683	Copy compilation unit
+1505582622697	Rename type 'TransformGDAXQuote'
+1505582696663	Copy compilation unit
+1505582713418	Rename type 'GDAXQuoteReader'

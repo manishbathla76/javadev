@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;com.moneymachine.spring.HTTPParser.SSLSocketFactory.java&apos; to &apos;MySSLSocketFactory.java&apos;&#x0D;&#x0A;- Original project: &apos;HTTPParser&apos;&#x0D;&#x0A;- Original element: &apos;com.moneymachine.spring.HTTPParser.SSLSocketFactory.java&apos;&#x0D;&#x0A;- Renamed element: &apos;com.moneymachine.spring.HTTPParser.MySSLSocketFactory.java&apos;" description="Rename compilation unit &apos;SSLSocketFactory.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src\/main\/java&lt;com.moneymachine.spring.HTTPParser{SSLSocketFactory.java" name="MySSLSocketFactory.java" references="false" stamp="1488043962071" version="1.0"/>
+</session>

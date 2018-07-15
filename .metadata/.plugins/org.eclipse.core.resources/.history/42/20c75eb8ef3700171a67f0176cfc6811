@@ -1,0 +1,294 @@
+package com.moneymachine.spring.DataLoader.valmodel.fcfe;
+
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.context.ApplicationContext;
+import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.jmx.export.annotation.ManagedResource;
+
+import com.moneymachine.spring.DataLoader.Main;
+import com.moneymachine.spring.DataLoader.TickerPojo;
+import com.moneymachine.spring.DataLoader.finstmt.AnnualBalanceSheetPojo;
+import com.moneymachine.spring.DataLoader.finstmt.AnnualIncomeStmtPojo;
+import com.moneymachine.spring.DataLoader.finstmt.BalanceSheetPojo;
+import com.moneymachine.spring.DataLoader.finstmt.IncomeStmtFacts;
+import com.moneymachine.spring.DataLoader.finstmt.IncomeStmtPojo;
+import com.moneymachine.spring.DataLoader.finstmt.StmtFacts;
+import com.moneymachine.spring.DataLoader.latestprice.LatestPricePojo;
+import com.moneymachine.spring.mongodb.CollectionType;
+import com.moneymachine.spring.mongodb.MongoDBQueryAdapter;
+import com.moneymachine.spring.objectpersistanceserviceclient.Log;
+import com.moneymachine.spring.objectpersistanceserviceclient.ObjectPersistanceServiceClient;
+
+
+/**
+ * Helps create the FCFE request from the various input data models
+ * 
+ * */
+@ManagedResource(description = "FCFECalcRequestBuilder")
+public class FCFECalcRequestBuilder {
+	MongoDBQueryAdapter mongoDBQueryAdapter;
+	private FCFERequestAdapter adapter;
+	
+	public void init(){
+		try {
+			adapter = new FCFERequestAdapter();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	@ManagedOperation
+	public void calculateFairValueForAll(){
+		HashMap<String,AnnualIncomeStmtPojo> incomeStmtList = mongoDBQueryAdapter.getCollection(new AnnualIncomeStmtPojo(), CollectionType.ANNINCOMESTMT.getStringName());
+		HashMap<String,AnnualBalanceSheetPojo> balSheetList =  mongoDBQueryAdapter.getCollection(new AnnualBalanceSheetPojo(), CollectionType.ANNBALANCESHEET.getStringName());
+		HashMap<String,LatestPricePojo> priceList = mongoDBQueryAdapter.getCollection(new LatestPricePojo(), CollectionType.LATESTPRICE.getStringName());
+		HashMap<String,TickerPojo> tickerList = mongoDBQueryAdapter.getCollection(new TickerPojo(), CollectionType.TICKERINFO.getStringName());
+		
+		for(Entry<String, LatestPricePojo> kv : priceList.entrySet()){
+			AnnualIncomeStmtPojo incomestmt = incomeStmtList.get(kv.getKey());
+			AnnualBalanceSheetPojo balSheet = balSheetList.get(kv.getKey());
+			TickerPojo ticketInfo = tickerList.get(kv.getKey());
+			if(incomestmt!=null && balSheet != null && kv.getValue()!=null){
+				try{
+					calculateFairValue(incomestmt,balSheet,ticketInfo,kv.getValue());
+				}catch(Exception e){
+					
+				}
+			}
+			
+		}
+		
+		
+	}
+	
+	
+	
+	public void calculateFairValue(AnnualIncomeStmtPojo incomestmt, AnnualBalanceSheetPojo balSheet,TickerPojo ticketInfo, LatestPricePojo pricePojo) throws Exception{
+		
+				FCFEResultsPojo resultPojo = new FCFEResultsPojo();
+				
+				//get fundamental data
+				//AnnualIncomeStmtPojo incomestmt = (AnnualIncomeStmtPojo) mongoDBQueryAdapter.getCollection(new AnnualIncomeStmtPojo(), CollectionType.ANNINCOMESTMT.getStringName(), "PKG");
+				//AnnualBalanceSheetPojo balSheet = (AnnualBalanceSheetPojo)mongoDBQueryAdapter.getCollection(new AnnualBalanceSheetPojo(), CollectionType.ANNBALANCESHEET.getStringName(), "PKG");
+				
+				FundamentalData fundamentalData =  adapter.createFundamentalData(incomestmt.getLatestFacts(), balSheet.getLatestFacts());
+				
+				resultPojo.setTicker(fundamentalData.getTicker());
+				resultPojo.set_id(fundamentalData.getTicker());
+				resultPojo.setPrice(pricePojo.getPrice());
+				resultPojo.setIndustry(ticketInfo.getIndustry());
+				resultPojo.setSector(ticketInfo.getSector());
+				
+				//Assumptions
+				double riskFreeRate = .02;
+				double marketRisk = .1;
+				double terminalGrowth = .03;
+				
+								
+				//LatestPricePojo pricePojo = (LatestPricePojo) mongoDBQueryAdapter.getCollection(new LatestPricePojo(), CollectionType.LATESTPRICE.getStringName(), "PKG");
+				MarketData marketData = adapter.createMarketData(riskFreeRate,marketRisk, pricePojo.getBeta(), pricePojo.getPrice());
+				
+				HashMap<String, AssumedGrowthCurve> growthScenarioList = getGrowthScenarios(incomestmt, terminalGrowth);
+
+				//filtering here only for what growth your want
+				double historicalAvgGrowth = growthScenarioList.get("AVG_GROWTH").getGrowthCurve()[0];
+				
+				if(historicalAvgGrowth <= 0 || pricePojo.getPrice() < 5.0 || fundamentalData.getRevenue() < 1000)
+					return;
+				
+				
+				for(Map.Entry<String,AssumedGrowthCurve> entry : growthScenarioList.entrySet()){
+					double growthvalue = entry.getValue().getGrowthCurve()[0];
+					String scenarioName= entry.getKey();
+					if(growthvalue > 0){
+						FCFERequest fcfeRequest1 = new FCFERequest();
+						fcfeRequest1.setRequestId(entry.getKey());
+						fcfeRequest1.setBaseFundamentalData(fundamentalData);
+						fcfeRequest1.setMarketData(marketData);
+						fcfeRequest1.setAssumedGrowthCurve(entry.getValue());
+						FCFECalculator calculator = new FCFECalculator(fcfeRequest1);
+						FCFEResponse response = calculator.calculate();
+						setResultPojoValues(scenarioName, resultPojo,response, false);
+						
+						//result filtering..exclusing minus or zero riceper5yfcfe at min growth
+						if(resultPojo.getPriceper5yfcfe_at_min_growth() > 0){
+						ApplicationContext context = Main.getApplicationContext();
+						 ObjectPersistanceServiceClient objectPersistanceServiceClient = 
+								 (ObjectPersistanceServiceClient) context.getBean("ObjectPersistanceServiceClient");
+						 objectPersistanceServiceClient.persistObject(resultPojo);
+						}
+					}else{
+						Log.log("Company " + fundamentalData.getTicker() + " had negative historical growth for scenario ." 
+								+ entry.getKey()
+								+ " So, FCFE cannt be calculated");
+						//setResultPojoValues(scenarioName, resultPojo,null, true);
+					}
+				}
+				
+				
+				
+				
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	private void setResultPojoValues(String scenarioName, FCFEResultsPojo resultPojo,
+	 FCFEResponse response, boolean setInvalid){
+		
+		double fairValue;
+		double discountpct;
+		double priceper5yfcfe = 0;
+		
+		if(setInvalid){
+			fairValue = -99.00;
+			discountpct = -99.00;
+			priceper5yfcfe = -99.00;
+		}else{
+			fairValue = response.getMeasures().get("fairvalue");
+			discountpct = response.getMeasures().get("discountpercent");
+			priceper5yfcfe = response.getMeasures().get("price_per_5y_fcfe");
+		}
+		
+		if(scenarioName.equalsIgnoreCase("MIN_GROWTH")){
+			resultPojo.setFairvalue_at_min_growth(fairValue);
+			resultPojo.setDiscountpct_at_min_growth(discountpct);
+			resultPojo.setPriceper5yfcfe_at_min_growth(priceper5yfcfe);
+		}else if(scenarioName.equalsIgnoreCase("AVG_GROWTH")){
+			resultPojo.setFairvalue_at_avg_growth(fairValue);
+			resultPojo.setDiscountpct_at_avg_growth(discountpct);
+			resultPojo.setPriceper5yfcfe_at_avg_growth(priceper5yfcfe);
+		}else if(scenarioName.equalsIgnoreCase("25PCT_AVG_GROWTH")){
+			resultPojo.setFairvalue_at_25pct_of_avg_growth(fairValue);
+			resultPojo.setDiscountpct_at_25pct_of_avg_growth(discountpct);
+			resultPojo.setPriceper5yfcfe_at_25pct_of_avg_growth(priceper5yfcfe);
+		}else if(scenarioName.equalsIgnoreCase("50PCT_AVG_GROWTH")){
+			resultPojo.setFairvalue_at_50pct_of_avg_growth(fairValue);
+			resultPojo.setDiscountpct_at_50pct_of_avg_growth(discountpct);
+			resultPojo.setPriceper5yfcfe_at_50pct_of_avg_growth(priceper5yfcfe);
+		}else if(scenarioName.equalsIgnoreCase("75PCT_AVG_GROWTH")){
+			resultPojo.setFairvalue_at_75pct_of_avg_growth(fairValue);
+			resultPojo.setDiscountpct_at_75pct_of_avg_growth(discountpct);
+			resultPojo.setPriceper5yfcfe_at_75pct_of_avg_growth(priceper5yfcfe);
+		}
+		
+	}
+	
+	
+	
+	private HashMap<String, AssumedGrowthCurve> getGrowthScenarios(IncomeStmtPojo incomestmt, double terminalgrowth){
+		
+		//get growth scenario
+		/**You need to test a company based on various growth patterns 
+		1. minimum historical growth fixed for next 4 periods
+		2. average historical growth fixed for next 4 periods 
+		(Average is misleading sometimes...you could have one spike growth and rest all could be negeative. That could make average look handsome, but overall uncertainly 
+		around free cash flow on  Yoy basis)
+		3. you can calculate at 25% of average
+		4. you can calculate at 50% of average
+		5. you can calculate at 75% of average
+		 above method will give good range of values
+		 
+		**/
+		
+		HashMap<String, AssumedGrowthCurve> growthCurveList = new HashMap<String,AssumedGrowthCurve>();
+		
+		double tenors[] = null; //empty for now
+		
+		//derived growth values based on company historical performance
+		double historicalMinimumGrowth = getMinimumRevenueGrowthRate(incomestmt);
+		double historicalAverageGrowth = getAverageRevenueGrowthRate(incomestmt);
+		
+		double points[] = null;
+		
+		//Case 1 - elements of growthCurvePoints are initialize with 0 so adding the minimum to it to initlaize with proper growth
+		points = new double[incomestmt.getIncomestatements().size() + 1];
+		points = Arrays.stream(points).map(g -> g + historicalMinimumGrowth).toArray();
+		growthCurveList.put("MIN_GROWTH", adapter.createGrowthCurveData(null, points, terminalgrowth));
+		
+		//Case 2
+		points = new double[incomestmt.getIncomestatements().size() + 1];
+		points = Arrays.stream(points).map(g -> g + historicalAverageGrowth).toArray();
+		growthCurveList.put("AVG_GROWTH",adapter.createGrowthCurveData(null, points, terminalgrowth));
+		
+		
+		//Case 3..25% of aveerage
+		points = new double[incomestmt.getIncomestatements().size() + 1];
+		points = Arrays.stream(points).map(g -> g + historicalAverageGrowth*.25).toArray();
+		growthCurveList.put("25PCT_AVG_GROWTH",adapter.createGrowthCurveData(null, points, terminalgrowth));
+
+		//Case 3..50% of aveerage
+		points = new double[incomestmt.getIncomestatements().size() + 1];
+		points = Arrays.stream(points).map(g -> g + historicalAverageGrowth*.50).toArray();
+		growthCurveList.put("50PCT_AVG_GROWTH",adapter.createGrowthCurveData(null, points, terminalgrowth));
+		
+		//Case 3..75% of aveerage
+		points = new double[incomestmt.getIncomestatements().size() + 1];
+		points = Arrays.stream(points).map(g -> g + historicalAverageGrowth*.75).toArray();
+		growthCurveList.put("75PCT_AVG_GROWTH",adapter.createGrowthCurveData(null, points, terminalgrowth));
+
+		return growthCurveList;
+		
+	}
+	
+	
+	
+	public double getMinimumRevenueGrowthRate(IncomeStmtPojo incomestmt){
+		return Arrays.stream(getGrowthRates(incomestmt)).min().getAsDouble();
+	}
+	
+	
+	public double getAverageRevenueGrowthRate(IncomeStmtPojo incomestmt){
+		return Arrays.stream(getGrowthRates(incomestmt)).average().getAsDouble();
+	}
+	
+	private double[] getGrowthRates(IncomeStmtPojo incomestmt){
+		List<IncomeStmtFacts> factList = incomestmt.getIncomestatements();
+		double growthRates[] = new double[factList.size()-1];
+		IncomeStmtFacts p = factList.get(0);
+		for(int i=1 ; i < factList.size();i++){
+			IncomeStmtFacts c = factList.get(i);
+			growthRates[i-1] = (p.getRevenue() - c.getRevenue())/c.getRevenue();
+			p = c;
+		}
+		return growthRates;
+	}
+
+
+	
+
+
+	public MongoDBQueryAdapter getMongoDBQueryAdapter() {
+		return mongoDBQueryAdapter;
+	}
+
+
+	public void setMongoDBQueryAdapter(MongoDBQueryAdapter mongoDBQueryAdapter) {
+		this.mongoDBQueryAdapter = mongoDBQueryAdapter;
+	}
+
+	
+
+	
+	
+	
+	
+}

@@ -1,0 +1,195 @@
+main INFO  support.ClassPathXmlApplicationContext - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@65ae6ba4: startup date [Sat Sep 23 23:02:44 EDT 2017]; root of context hierarchy
+main INFO  xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [Spring-Module.xml]
+main INFO  gateway.Main - Starting Main on mbathla-server with PID 5416 (\\mbdisk\dev\workspace\gateway\target\classes started by mbathla in \\mbdisk\dev\workspace\gateway)
+main INFO  gateway.Main - No active profile set, falling back to default profiles: default
+main INFO  embedded.AnnotationConfigEmbeddedWebApplicationContext - Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@61862a7f: startup date [Sat Sep 23 23:02:47 EDT 2017]; root of context hierarchy
+background-preinit INFO  util.Version - HV000001: Hibernate Validator 5.3.5.Final
+main INFO  config.IntegrationRegistrar - No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+main INFO  config.DefaultConfiguringBeanFactoryPostProcessor - No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+main INFO  config.DefaultConfiguringBeanFactoryPostProcessor - No bean named 'taskScheduler' has been explicitly defined. Therefore, a default ThreadPoolTaskScheduler will be created.
+main INFO  support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'integrationGlobalProperties' of type [org.springframework.beans.factory.config.PropertiesFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+main INFO  support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'integrationGlobalProperties' of type [java.util.Properties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+main INFO  util.log - Logging initialized @10627ms to org.eclipse.jetty.util.log.Slf4jLog
+main INFO  jetty.JettyEmbeddedServletContainerFactory - Server initialized with port: 8080
+main INFO  server.Server - jetty-9.4.6.v20170531
+main INFO  server.session - DefaultSessionIdManager workerName=node0
+main INFO  server.session - No SessionScavenger set, using defaults
+main INFO  server.session - Scavenging every 660000ms
+main INFO  ContextHandler.application - Initializing Spring embedded WebApplicationContext
+main INFO  context.ContextLoader - Root WebApplicationContext: initialization completed in 7154 ms
+main INFO  servlet.ServletRegistrationBean - Mapping servlet: 'dispatcherServlet' to [/]
+main INFO  servlet.FilterRegistrationBean - Mapping filter: 'characterEncodingFilter' to: [/*]
+main INFO  servlet.FilterRegistrationBean - Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+main INFO  servlet.FilterRegistrationBean - Mapping filter: 'httpPutFormContentFilter' to: [/*]
+main INFO  servlet.FilterRegistrationBean - Mapping filter: 'requestContextFilter' to: [/*]
+main INFO  handler.ContextHandler - Started o.s.b.c.e.j.JettyEmbeddedWebAppContext@6b7d1df8{/,[file:///C:/Users/mbathla/AppData/Local/Temp/jetty-docbase.2291914110289949195.8080/],AVAILABLE}
+main INFO  server.Server - Started @11900ms
+kraken INFO  common.Log - TransformKrakenQuote==>instrument=ETHUSD,market=kraken,bid=292.46,bidSize=30.0,ask=292.75,askSize=1.0,mid=292.605,midSize=15.5,timestamp=1506222175939,timestampstr=2017-09-23 23:02:55:939
+
+poloniex INFO  common.Log - TransformPoloniexQuote==>instrument=LTCBTC,market=poloniex,bid=0.01309423,bidSize=3.47934419,ask=0.01309732,askSize=40.0,mid=0.013095775,midSize=21.739672095,timestamp=1506222175939,timestampstr=2017-09-23 23:02:55:939
+
+gdax INFO  common.Log - TransformGDAXQuote==>instrument=BTCUSD,market=gdax,bid=3772.58,bidSize=6.0294,ask=3772.59,askSize=0.25111272,mid=3772.585,midSize=3.14025636,timestamp=1506222175939,timestampstr=2017-09-23 23:02:55:939
+
+gdax INFO  common.Log - TransformGDAXQuote==>instrument=LTCUSD,market=gdax,bid=49.48,bidSize=42.294,ask=49.49,askSize=80.789777,mid=49.485,midSize=61.5418885,timestamp=1506222175970,timestampstr=2017-09-23 23:02:55:970
+
+poloniex INFO  common.Log - TransformPoloniexQuote==>instrument=LTCUSD,market=poloniex,bid=49.29999885,bidSize=0.01,ask=49.34899999,askSize=33.732,mid=49.32449942,midSize=16.871,timestamp=1506222175954,timestampstr=2017-09-23 23:02:55:954
+
+poloniex INFO  common.Log - TransformPoloniexQuote==>instrument=ETHBTC,market=poloniex,bid=0.0777,bidSize=11.72957586,ask=0.07772611,askSize=0.23934448,mid=0.077713055,midSize=5.98446017,timestamp=1506222175971,timestampstr=2017-09-23 23:02:55:971
+
+poloniex INFO  common.Log - TransformPoloniexQuote==>instrument=ETHUSD,market=poloniex,bid=291.92672001,bidSize=119.854,ask=292.89999997,askSize=7.43479136,mid=292.41335999,midSize=63.64439568,timestamp=1506222175971,timestampstr=2017-09-23 23:02:55:971
+
+poloniex INFO  common.Log - TransformPoloniexQuote==>instrument=BTCUSD,market=poloniex,bid=3772.00000001,bidSize=0.08271699,ask=3774.50165473,askSize=0.99760029,mid=3773.25082737,midSize=0.54015864,timestamp=1506222175971,timestampstr=2017-09-23 23:02:55:971
+
+kraken INFO  common.Log - TransformKrakenQuote==>instrument=BTCUSD,market=kraken,bid=3779.2,bidSize=1.0,ask=3779.9,askSize=2.0,mid=3779.55,midSize=1.5,timestamp=1506222175954,timestampstr=2017-09-23 23:02:55:954
+
+kraken INFO  common.Log - TransformKrakenQuote==>instrument=LTCUSD,market=kraken,bid=49.48,bidSize=35.0,ask=49.49,askSize=1.0,mid=49.485,midSize=18.0,timestamp=1506222175971,timestampstr=2017-09-23 23:02:55:971
+
+gdax INFO  common.Log - TransformGDAXQuote==>instrument=ETHUSD,market=gdax,bid=293.64,bidSize=16.24570917,ask=293.65,askSize=337.83337655,mid=293.645,midSize=177.03954286,timestamp=1506222175971,timestampstr=2017-09-23 23:02:55:971
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=BTCUSD,market=gdax,bid=3772.58,bidSize=6.0294,ask=3772.59,askSize=0.25111272,mid=3772.585,midSize=3.14025636,timestamp=1506222176044,timestampstr=2017-09-23 23:02:56:044
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=LTCUSD,market=gdax,bid=49.48,bidSize=42.294,ask=49.49,askSize=80.789777,mid=49.485,midSize=61.5418885,timestamp=1506222176044,timestampstr=2017-09-23 23:02:56:044
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=ETHUSD,market=gdax,bid=293.64,bidSize=16.24570917,ask=293.65,askSize=337.83337655,mid=293.645,midSize=177.03954286,timestamp=1506222176044,timestampstr=2017-09-23 23:02:56:044
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=ETHUSD,market=kraken,bid=292.46,bidSize=30.0,ask=292.75,askSize=1.0,mid=292.605,midSize=15.5,timestamp=1506222176107,timestampstr=2017-09-23 23:02:56:107
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=BTCUSD,market=kraken,bid=3779.2,bidSize=1.0,ask=3779.9,askSize=2.0,mid=3779.55,midSize=1.5,timestamp=1506222176107,timestampstr=2017-09-23 23:02:56:107
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=LTCUSD,market=kraken,bid=49.48,bidSize=35.0,ask=49.49,askSize=1.0,mid=49.485,midSize=18.0,timestamp=1506222176107,timestampstr=2017-09-23 23:02:56:107
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=LTCBTC,market=poloniex,bid=0.01309423,bidSize=3.47934419,ask=0.01309732,askSize=40.0,mid=0.013095775,midSize=21.739672095,timestamp=1506222176123,timestampstr=2017-09-23 23:02:56:123
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=LTCUSD,market=poloniex,bid=49.29999885,bidSize=0.01,ask=49.34899999,askSize=33.732,mid=49.32449942,midSize=16.871,timestamp=1506222176123,timestampstr=2017-09-23 23:02:56:123
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=ETHBTC,market=poloniex,bid=0.0777,bidSize=11.72957586,ask=0.07772611,askSize=0.23934448,mid=0.077713055,midSize=5.98446017,timestamp=1506222176123,timestampstr=2017-09-23 23:02:56:123
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=ETHUSD,market=poloniex,bid=291.92672001,bidSize=119.854,ask=292.89999997,askSize=7.43479136,mid=292.41335999,midSize=63.64439568,timestamp=1506222176123,timestampstr=2017-09-23 23:02:56:123
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=BTCUSD,market=poloniex,bid=3772.00000001,bidSize=0.08271699,ask=3774.50165473,askSize=0.99760029,mid=3773.25082737,midSize=0.54015864,timestamp=1506222176123,timestampstr=2017-09-23 23:02:56:123
+
+bittrex INFO  common.Log - TransformBittrexQuote==>instrument=BTCUSD,market=bittrex,bid=3771.0,bidSize=3.91773612,ask=3774.01,askSize=0.3901377,mid=3772.505,midSize=2.15393691,timestamp=1506222176341,timestampstr=2017-09-23 23:02:56:341
+
+bittrex INFO  common.Log - TransformBittrexQuote==>instrument=ETHBTC,market=bittrex,bid=0.07778,bidSize=2.78429858,ask=0.07779977,askSize=0.96954391,mid=0.077789885,midSize=1.8769212450000001,timestamp=1506222176373,timestampstr=2017-09-23 23:02:56:373
+
+bittrex INFO  common.Log - TransformBittrexQuote==>instrument=LTCBTC,market=bittrex,bid=0.01304066,bidSize=34.085,ask=0.013089,askSize=20.17993677,mid=0.01306483,midSize=27.132468385000003,timestamp=1506222176404,timestampstr=2017-09-23 23:02:56:404
+
+bittrex INFO  common.Log - TransformBittrexQuote==>instrument=LTCUSD,market=bittrex,bid=49.00100055,bidSize=169.704,ask=49.1,askSize=186.985,mid=49.050500275000005,midSize=178.3445,timestamp=1506222176404,timestampstr=2017-09-23 23:02:56:404
+
+bittrex INFO  common.Log - TransformBittrexQuote==>instrument=ETHUSD,market=bittrex,bid=292.61,bidSize=2.80659032,ask=292.78,askSize=1.0,mid=292.695,midSize=1.90329516,timestamp=1506222176419,timestampstr=2017-09-23 23:02:56:419
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=BTCUSD,market=bittrex,bid=3771.0,bidSize=3.91773612,ask=3774.01,askSize=0.3901377,mid=3772.505,midSize=2.15393691,timestamp=1506222176419,timestampstr=2017-09-23 23:02:56:419
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=ETHBTC,market=bittrex,bid=0.07778,bidSize=2.78429858,ask=0.07779977,askSize=0.96954391,mid=0.077789885,midSize=1.8769212450000001,timestamp=1506222176419,timestampstr=2017-09-23 23:02:56:419
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=LTCBTC,market=bittrex,bid=0.01304066,bidSize=34.085,ask=0.013089,askSize=20.17993677,mid=0.01306483,midSize=27.132468385000003,timestamp=1506222176419,timestampstr=2017-09-23 23:02:56:419
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=LTCUSD,market=bittrex,bid=49.00100055,bidSize=169.704,ask=49.1,askSize=186.985,mid=49.050500275000005,midSize=178.3445,timestamp=1506222176419,timestampstr=2017-09-23 23:02:56:419
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=ETHUSD,market=bittrex,bid=292.61,bidSize=2.80659032,ask=292.78,askSize=1.0,mid=292.695,midSize=1.90329516,timestamp=1506222176435,timestampstr=2017-09-23 23:02:56:435
+
+main INFO  annotation.RequestMappingHandlerAdapter - Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@61862a7f: startup date [Sat Sep 23 23:02:47 EDT 2017]; root of context hierarchy
+main INFO  annotation.RequestMappingHandlerMapping - Mapped "{[/api/hello]}" onto public java.lang.String com.moneymachine.digitalcurrency.gateway.rest.IndexRestController.index()
+main INFO  annotation.RequestMappingHandlerMapping - Mapped "{[/api/bestquote/all]}" onto public java.util.ArrayList<com.moneymachine.digitalcurrency.gateway.arb.BestQuote> com.moneymachine.digitalcurrency.gateway.rest.IndexRestController.getAllBestQuote()
+main INFO  annotation.RequestMappingHandlerMapping - Mapped "{[/api/latestquote/all]}" onto public java.util.ArrayList<com.moneymachine.digitalcurrency.gateway.LatestQuote> com.moneymachine.digitalcurrency.gateway.rest.IndexRestController.getAllLatestQuote()
+main INFO  annotation.RequestMappingHandlerMapping - Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+main INFO  annotation.RequestMappingHandlerMapping - Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+main INFO  handler.SimpleUrlHandlerMapping - Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+main INFO  handler.SimpleUrlHandlerMapping - Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+main INFO  handler.SimpleUrlHandlerMapping - Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+main INFO  driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+main INFO  concurrent.ThreadPoolTaskScheduler - Initializing ExecutorService  'taskScheduler'
+cluster-ClusterId{value='59c72062143c5d15283b1cb6', description='null'}-localhost:27017 INFO  driver.cluster - Exception in monitor thread while connecting to server localhost:27017
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.connection.SocketStream.open(SocketStream.java:63)
+	at com.mongodb.connection.InternalStreamConnection.open(InternalStreamConnection.java:115)
+	at com.mongodb.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:113)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at com.mongodb.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:57)
+	at com.mongodb.connection.SocketStream.open(SocketStream.java:58)
+	... 3 more
+main INFO  annotation.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+main INFO  support.DefaultLifecycleProcessor - Starting beans in phase 0
+main INFO  endpoint.EventDrivenConsumer - Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+main INFO  channel.PublishSubscribeChannel - Channel 'application.errorChannel' has 1 subscriber(s).
+main INFO  endpoint.EventDrivenConsumer - started _org.springframework.integration.errorLogger
+main INFO  support.DefaultLifecycleProcessor - Starting beans in phase 2147483647
+main INFO  ContextHandler.application - Initializing Spring FrameworkServlet 'dispatcherServlet'
+main INFO  servlet.DispatcherServlet - FrameworkServlet 'dispatcherServlet': initialization started
+main INFO  servlet.DispatcherServlet - FrameworkServlet 'dispatcherServlet': initialization completed in 78 ms
+main INFO  server.AbstractConnector - Started ServerConnector@3044e9c7{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+main INFO  jetty.JettyEmbeddedServletContainer - Jetty started on port(s) 8080 (http/1.1)
+main INFO  gateway.Main - Started Main in 13.035 seconds (JVM running for 16.35)
+kraken INFO  common.Log - TransformKrakenQuote==>instrument=ETHUSD,market=kraken,bid=292.46,bidSize=34.0,ask=292.95,askSize=93.0,mid=292.705,midSize=63.5,timestamp=1506222185300,timestampstr=2017-09-23 23:03:05:300
+
+kraken INFO  common.Log - TransformKrakenQuote==>instrument=BTCUSD,market=kraken,bid=3779.2,bidSize=1.0,ask=3779.9,askSize=2.0,mid=3779.55,midSize=1.5,timestamp=1506222185302,timestampstr=2017-09-23 23:03:05:302
+
+kraken INFO  common.Log - TransformKrakenQuote==>instrument=LTCUSD,market=kraken,bid=49.48,bidSize=35.0,ask=49.49,askSize=1.0,mid=49.485,midSize=18.0,timestamp=1506222185302,timestampstr=2017-09-23 23:03:05:302
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=ETHUSD,market=kraken,bid=292.46,bidSize=34.0,ask=292.95,askSize=93.0,mid=292.705,midSize=63.5,timestamp=1506222185302,timestampstr=2017-09-23 23:03:05:302
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=BTCUSD,market=kraken,bid=3779.2,bidSize=1.0,ask=3779.9,askSize=2.0,mid=3779.55,midSize=1.5,timestamp=1506222185302,timestampstr=2017-09-23 23:03:05:302
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=LTCUSD,market=kraken,bid=49.48,bidSize=35.0,ask=49.49,askSize=1.0,mid=49.485,midSize=18.0,timestamp=1506222185302,timestampstr=2017-09-23 23:03:05:302
+
+gdax INFO  common.Log - TransformGDAXQuote==>instrument=BTCUSD,market=gdax,bid=3772.75,bidSize=7.22,ask=3772.76,askSize=10.13078292,mid=3772.755,midSize=8.67539146,timestamp=1506222185364,timestampstr=2017-09-23 23:03:05:364
+
+gdax INFO  common.Log - TransformGDAXQuote==>instrument=LTCUSD,market=gdax,bid=49.48,bidSize=42.30847,ask=49.49,askSize=25.57127913,mid=49.485,midSize=33.939874565,timestamp=1506222185364,timestampstr=2017-09-23 23:03:05:364
+
+gdax INFO  common.Log - TransformGDAXQuote==>instrument=ETHUSD,market=gdax,bid=293.64,bidSize=16.60570917,ask=293.65,askSize=308.1536076,mid=293.645,midSize=162.379658385,timestamp=1506222185364,timestampstr=2017-09-23 23:03:05:364
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=BTCUSD,market=gdax,bid=3772.75,bidSize=7.22,ask=3772.76,askSize=10.13078292,mid=3772.755,midSize=8.67539146,timestamp=1506222185364,timestampstr=2017-09-23 23:03:05:364
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=LTCUSD,market=gdax,bid=49.48,bidSize=42.30847,ask=49.49,askSize=25.57127913,mid=49.485,midSize=33.939874565,timestamp=1506222185364,timestampstr=2017-09-23 23:03:05:364
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=ETHUSD,market=gdax,bid=293.64,bidSize=16.60570917,ask=293.65,askSize=308.1536076,mid=293.645,midSize=162.379658385,timestamp=1506222185364,timestampstr=2017-09-23 23:03:05:364
+
+poloniex INFO  common.Log - TransformPoloniexQuote==>instrument=LTCBTC,market=poloniex,bid=0.01307022,bidSize=40.658,ask=0.01309731,askSize=118.81326287,mid=0.013083765,midSize=79.735631435,timestamp=1506222185568,timestampstr=2017-09-23 23:03:05:568
+
+poloniex INFO  common.Log - TransformPoloniexQuote==>instrument=LTCUSD,market=poloniex,bid=49.29999885,bidSize=0.01,ask=49.34899999,askSize=173.237,mid=49.32449942,midSize=86.62349999999999,timestamp=1506222185568,timestampstr=2017-09-23 23:03:05:568
+
+poloniex INFO  common.Log - TransformPoloniexQuote==>instrument=ETHBTC,market=poloniex,bid=0.07770388,bidSize=4.95879108,ask=0.07775498,askSize=8.6294141,mid=0.07772943,midSize=6.79410259,timestamp=1506222185568,timestampstr=2017-09-23 23:03:05:568
+
+poloniex INFO  common.Log - TransformPoloniexQuote==>instrument=ETHUSD,market=poloniex,bid=291.92686,bidSize=16.0,ask=292.89999997,askSize=7.43479136,mid=292.413429985,midSize=11.71739568,timestamp=1506222185568,timestampstr=2017-09-23 23:03:05:568
+
+poloniex INFO  common.Log - TransformPoloniexQuote==>instrument=BTCUSD,market=poloniex,bid=3772.0,bidSize=2.42953385,ask=3774.50165476,askSize=0.11469203,mid=3773.25082738,midSize=1.27211294,timestamp=1506222185568,timestampstr=2017-09-23 23:03:05:568
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=LTCBTC,market=poloniex,bid=0.01307022,bidSize=40.658,ask=0.01309731,askSize=118.81326287,mid=0.013083765,midSize=79.735631435,timestamp=1506222185583,timestampstr=2017-09-23 23:03:05:583
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=LTCUSD,market=poloniex,bid=49.29999885,bidSize=0.01,ask=49.34899999,askSize=173.237,mid=49.32449942,midSize=86.62349999999999,timestamp=1506222185583,timestampstr=2017-09-23 23:03:05:583
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=ETHBTC,market=poloniex,bid=0.07770388,bidSize=4.95879108,ask=0.07775498,askSize=8.6294141,mid=0.07772943,midSize=6.79410259,timestamp=1506222185583,timestampstr=2017-09-23 23:03:05:583
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=ETHUSD,market=poloniex,bid=291.92686,bidSize=16.0,ask=292.89999997,askSize=7.43479136,mid=292.413429985,midSize=11.71739568,timestamp=1506222185583,timestampstr=2017-09-23 23:03:05:583
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=BTCUSD,market=poloniex,bid=3772.0,bidSize=2.42953385,ask=3774.50165476,askSize=0.11469203,mid=3773.25082738,midSize=1.27211294,timestamp=1506222185583,timestampstr=2017-09-23 23:03:05:583
+
+bittrex INFO  common.Log - TransformBittrexQuote==>instrument=BTCUSD,market=bittrex,bid=3771.0,bidSize=3.91773612,ask=3774.01,askSize=0.3901377,mid=3772.505,midSize=2.15393691,timestamp=1506222185630,timestampstr=2017-09-23 23:03:05:630
+
+bittrex INFO  common.Log - TransformBittrexQuote==>instrument=ETHBTC,market=bittrex,bid=0.07778,bidSize=0.85099858,ask=0.07779977,askSize=0.03025332,mid=0.077789885,midSize=0.44062595,timestamp=1506222185646,timestampstr=2017-09-23 23:03:05:646
+
+bittrex INFO  common.Log - TransformBittrexQuote==>instrument=LTCBTC,market=bittrex,bid=0.01306,bidSize=1.78889175,ask=0.013089,askSize=17.17993677,mid=0.0130745,midSize=9.484414260000001,timestamp=1506222185661,timestampstr=2017-09-23 23:03:05:661
+
+bittrex INFO  common.Log - TransformBittrexQuote==>instrument=LTCUSD,market=bittrex,bid=49.00100061,bidSize=29.0729,ask=49.1,askSize=186.985,mid=49.050500305,midSize=108.02895000000001,timestamp=1506222185661,timestampstr=2017-09-23 23:03:05:661
+
+bittrex INFO  common.Log - TransformBittrexQuote==>instrument=ETHUSD,market=bittrex,bid=292.61,bidSize=2.80659032,ask=292.78,askSize=1.0,mid=292.695,midSize=1.90329516,timestamp=1506222185677,timestampstr=2017-09-23 23:03:05:677
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=BTCUSD,market=bittrex,bid=3771.0,bidSize=3.91773612,ask=3774.01,askSize=0.3901377,mid=3772.505,midSize=2.15393691,timestamp=1506222185677,timestampstr=2017-09-23 23:03:05:677
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=ETHBTC,market=bittrex,bid=0.07778,bidSize=0.85099858,ask=0.07779977,askSize=0.03025332,mid=0.077789885,midSize=0.44062595,timestamp=1506222185677,timestampstr=2017-09-23 23:03:05:677
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=LTCBTC,market=bittrex,bid=0.01306,bidSize=1.78889175,ask=0.013089,askSize=17.17993677,mid=0.0130745,midSize=9.484414260000001,timestamp=1506222185677,timestampstr=2017-09-23 23:03:05:677
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=LTCUSD,market=bittrex,bid=49.00100061,bidSize=29.0729,ask=49.1,askSize=186.985,mid=49.050500305,midSize=108.02895000000001,timestamp=1506222185677,timestampstr=2017-09-23 23:03:05:677
+
+QuoteEventProcessorThread INFO  common.Log - LatestQuoteCache==> storedinstrument=ETHUSD,market=bittrex,bid=292.61,bidSize=2.80659032,ask=292.78,askSize=1.0,mid=292.695,midSize=1.90329516,timestamp=1506222185677,timestampstr=2017-09-23 23:03:05:677
+

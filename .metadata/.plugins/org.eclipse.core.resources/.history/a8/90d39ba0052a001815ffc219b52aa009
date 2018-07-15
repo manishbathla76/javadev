@@ -1,0 +1,24 @@
+package com.moneymachine.commontools.extractorutil;
+
+import java.util.ArrayList;
+
+public class FileUtility {
+		public static ArrayList<String> getFileNames(){
+			ArrayList<String> filesName = new ArrayList<String>();
+			return filesName;
+		}
+		
+		public static ArrayList<String> getUncompressedFileNames(){
+			ArrayList<String> filesName = new ArrayList<String>();
+			return filesName;
+		}
+		
+		public static void compressUncompressedFiles(){
+			
+		}
+		
+		
+		public static Byte[] getFileContents(){
+			
+		}
+}

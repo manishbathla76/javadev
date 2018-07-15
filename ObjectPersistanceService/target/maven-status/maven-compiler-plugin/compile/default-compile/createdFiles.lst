@@ -1,0 +1,9 @@
+com\moneymachine\spring\objectpersistanceservice\Main.class
+com\moneymachine\spring\objectpersistanceservice\HelloWorld.class
+com\moneymachine\spring\objectpersistanceservice\PersistenceRequestHelper.class
+com\moneymachine\spring\objectpersistanceservice\mangodb\MongoDBAdapter.class
+com\moneymachine\spring\objectpersistanceservice\PersistenceRequest.class
+com\moneymachine\spring\objectpersistanceservice\mangodb\MongoDBClientFactory.class
+com\moneymachine\spring\objectpersistanceservice\App.class
+com\moneymachine\spring\objectpersistanceservice\jms\SimpleMessageListener.class
+com\moneymachine\spring\objectpersistanceservice\Log.class

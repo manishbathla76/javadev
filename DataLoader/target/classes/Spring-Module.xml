@@ -1,0 +1,25 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/util 
+	http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+	
+	<bean id="KrakenPriceReader" class="com.moneymachine.digitalcurrency.gateway.krakenadapter.quotes.KrakenQuoteReader" init-method="init">
+	</bean>
+	
+	<bean id="BittrexPriceReader" class="com.moneymachine.digitalcurrency.gateway.bittrex.quotes.BittrexQuoteReader" init-method="init">
+	</bean>
+	
+	<bean id="GDAXPriceReader" class="com.moneymachine.digitalcurrency.gateway.gdaxadapter.quotes.GDAXQuoteReader" init-method="init">
+	</bean>
+	
+	<bean id="PoloniexPriceReader" class="com.moneymachine.digitalcurrency.gateway.poloniex.quotes.PoloniexQuoteReader" init-method="init">
+	</bean>
+	
+	<bean id="ObjectPersistanceServiceClient" class="com.moneymachine.spring.objectpersistanceserviceclient.ObjectPersistanceServiceClient" init-method="init">
+	</bean>
+	
+</beans>

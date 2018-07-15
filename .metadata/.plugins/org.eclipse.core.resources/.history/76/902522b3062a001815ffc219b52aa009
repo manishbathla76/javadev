@@ -1,0 +1,5 @@
+package com.moneymachine.commontools.extractorutil;
+
+public class Setting {
+
+}

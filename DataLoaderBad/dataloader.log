@@ -1,0 +1,19 @@
+main INFO  support.ClassPathXmlApplicationContext - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@6b26e945: startup date [Sun May 28 01:24:02 EDT 2017]; root of context hierarchy
+main INFO  xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [Spring-Module.xml]
+main WARN  support.JmxUtils - Found more than one MBeanServer instance. Returning first from list.
+main INFO  driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+main INFO  export.MBeanExporter - Registering beans for JMX exposure on startup
+main INFO  export.MBeanExporter - Bean with name 'TickerDataLoader' has been autodetected for JMX exposure
+main INFO  export.MBeanExporter - Bean with name 'TradeDataLoader' has been autodetected for JMX exposure
+main INFO  export.MBeanExporter - Bean with name 'LatestPriceLoader' has been autodetected for JMX exposure
+main INFO  export.MBeanExporter - Bean with name 'FCFECalcRequestBuilder' has been autodetected for JMX exposure
+main INFO  export.MBeanExporter - Bean with name 'IncomeStmtTransformer' has been autodetected for JMX exposure
+main INFO  export.MBeanExporter - Bean with name 'BalanceSheetTransformer' has been autodetected for JMX exposure
+main INFO  export.MBeanExporter - Bean with name 'CashFlowStmtTransformer' has been autodetected for JMX exposure
+main INFO  export.MBeanExporter - Located managed bean 'FCFECalcRequestBuilder': registering with JMX server as MBean [com.moneymachine.spring.DataLoader.valmodel.fcfe:name=FCFECalcRequestBuilder,type=FCFECalcRequestBuilder]
+main INFO  export.MBeanExporter - Located managed bean 'TickerDataLoader': registering with JMX server as MBean [com.moneymachine.spring.DataLoader:name=TickerDataLoader,type=TickerDataLoader]
+main INFO  export.MBeanExporter - Located managed bean 'TradeDataLoader': registering with JMX server as MBean [com.moneymachine.spring.DataLoader.trade:name=TradeDataLoader,type=TradeDataLoader]
+main INFO  export.MBeanExporter - Located managed bean 'BalanceSheetTransformer': registering with JMX server as MBean [com.moneymachine.spring.transform:name=BalanceSheetTransformer,type=DataMatrixTransformer]
+main INFO  export.MBeanExporter - Located managed bean 'LatestPriceLoader': registering with JMX server as MBean [com.moneymachine.spring.DataLoader.latestprice:name=LatestPriceLoader,type=LatestPriceLoader]
+main INFO  export.MBeanExporter - Located managed bean 'CashFlowStmtTransformer': registering with JMX server as MBean [com.moneymachine.spring.transform:name=CashFlowStmtTransformer,type=DataMatrixTransformer]
+main INFO  export.MBeanExporter - Located managed bean 'IncomeStmtTransformer': registering with JMX server as MBean [com.moneymachine.spring.transform:name=IncomeStmtTransformer,type=DataMatrixTransformer]

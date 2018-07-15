@@ -1,0 +1,22 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	
+	<bean id="ObjectPersistanceServiceClient" class="com.moneymachine.spring.objectpersistanceserviceclient.ObjectPersistanceServiceClient" init-method="init" destroy-method="destroy">
+	</bean>
+	
+	<!-- bean id="MessageProducer" class="com.moneymachine.spring.objectpersistanceserviceclient.MessagePublisherTest" init-method="init">
+	</bean-->
+		
+	<!--  bean id="MessageConsumer" class="com.moneymachine.spring.objectpersistanceserviceclient.MessageConsumerTest" init-method="init" depends-on="MessageProducer">
+	</bean-->
+	
+		
+	<!-- Connection Factory -->
+	<!-- bean id="connectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+    	<property name="brokerURL" value="tcp://localhost:61616" />
+	</bean-->
+	
+</beans>

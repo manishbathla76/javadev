@@ -1,0 +1,1 @@
+java -Dcom.sun.management.jmxremote -Djava.rmi.server.hostname=mblinux -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -jar data-loader-1.0.jar

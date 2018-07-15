@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;PBETool&apos; to &apos;CommonTools&apos;&#x0D;&#x0A;- Original element: &apos;PBETool&apos;&#x0D;&#x0A;- Renamed element: &apos;PBETool&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename Java project &apos;PBETool&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=PBETool" name="CommonTools" references="true" stamp="1506269262288" version="1.0"/>
+</session>

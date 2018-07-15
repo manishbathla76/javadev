@@ -1,0 +1,54 @@
+package com.moneymachine.spring.DataLoader.tradeaggregator;
+
+import java.util.ArrayList;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
+
+/**
+ * This is the main aggreagtor class which aggregates trades from different sources
+ * */
+public class TradeManager {
+	
+	static final Logger logger = LogManager.getLogger(TradeManager.class.getName());
+	
+	private TradeFilesManager fidelityTradeFilesManager;
+	private TradeFilesManager tradeKingTradeFilesManager;
+
+	public TradeFilesManager getFidelityTradeFilesManager() {
+		return fidelityTradeFilesManager;
+	}
+
+	public void setFidelityTradeFilesManager(
+			TradeFilesManager fidelityTradeFilesManager) {
+		this.fidelityTradeFilesManager = fidelityTradeFilesManager;
+	}
+	
+	
+	public TradeFilesManager getTradeKingTradeFilesManager() {
+		return tradeKingTradeFilesManager;
+	}
+
+	public void setTradeKingTradeFilesManager(
+			TradeFilesManager tradeKingTradeFilesManager) {
+		this.tradeKingTradeFilesManager = tradeKingTradeFilesManager;
+	}
+
+	public ArrayList<TradeData> getTradeData(){
+		//later on combine from all different sets
+		ArrayList<TradeData> fidelityTrades = fidelityTradeFilesManager.getTradeData();
+		ArrayList<TradeData> tradeKingTrades = tradeKingTradeFilesManager.getTradeData();
+		
+		ArrayList<TradeData> finalResult = new ArrayList<TradeData>();
+		/*if(fidelityTrades!=null){
+			finalResult.addAll(fidelityTrades);
+		}*/
+		
+		if(tradeKingTrades!=null){
+			finalResult.addAll(tradeKingTrades);
+		}
+		return finalResult;
+	}
+	
+}

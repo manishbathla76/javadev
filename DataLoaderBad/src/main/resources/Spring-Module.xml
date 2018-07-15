@@ -1,0 +1,334 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/util 
+	http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+	<bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean"/>
+	
+	<!-- you may just copy the following lines -->
+	<bean id="exporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
+	        <property name="autodetect" value="true" />
+	        <property name="namingStrategy" ref="namingStrategy" />
+	        <property name="assembler" ref="assembler" />
+	</bean>
+	     
+	<bean id="jmxAttributeSource" class="org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource" />
+	     
+	<bean id="assembler" class="org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler">
+	        <property name="attributeSource" ref="jmxAttributeSource" />
+	</bean>
+	     
+	<bean id="namingStrategy" class="org.springframework.jmx.export.naming.MetadataNamingStrategy">
+	        <property name="attributeSource" ref="jmxAttributeSource" />
+	</bean>
+	
+	<bean id="ObjectPersistanceServiceClient" class="com.moneymachine.spring.objectpersistanceserviceclient.ObjectPersistanceServiceClient" init-method="init">
+	</bean>
+	
+	
+	<bean id="PositionLoader" class="com.moneymachine.spring.objectpersistanceserviceclient.position.PositionLoader" init-method="init">
+		<property name="mongoDBQueryAdapter" ref="MongoDBQueryAdapter"/>
+		<property name="objectPersistanceServiceClient" ref="ObjectPersistanceServiceClient"/>
+	</bean>
+	
+	<!--  Ticker Data Loader beans -->
+	
+	<bean id="TickerDataLoader" class="com.moneymachine.spring.DataLoader.TickerDataLoader" init-method="init">
+	</bean>
+	
+	<bean id="NASDAQTickerCSVFileReader" class="com.moneymachine.spring.DataLoader.TickerCSVFileReader">
+		<property name="fileName" value="/home/eagle/stagingdata/tickers/nasdaqcompanylist.csv" /> 
+		<!-- <property name="fileName" value="G:\\stagingdata\\tickers\\naqdaqcompanylist.csv" /> -->
+	</bean>
+	
+	<bean id="NYSETickerCSVFileReader" class="com.moneymachine.spring.DataLoader.TickerCSVFileReader">
+		<property name="fileName" value="/home/eagle/stagingdata/tickers/nysecompanylist.csv" />
+	</bean>
+	
+	<!--  Trades data Loader beans -->
+	
+	<bean id="TradeDataLoader" class="com.moneymachine.spring.DataLoader.trade.TradeDataLoader" init-method="init">
+	<property name="excludeTickers">
+		<util:set set-class="java.util.HashSet">
+			<value>290138205</value>
+			<value>16952T100</value>
+			<value>CYOU</value>
+			<value>FF</value>
+			<value>G5258J109</value>
+			<value>G58249106</value>
+			<value>GRPN</value>
+			<value>GRUB</value>
+			<value>MMYT</value>
+			<value>RLOC</value>
+			<value>VRNS</value>
+			<value>YNDX</value>
+		</util:set>
+		</property>
+		<property name="tradeManager" ref="TradeManager" />
+	</bean>
+	
+	<bean id="TradeManager" class="com.moneymachine.spring.DataLoader.tradeaggregator.TradeManager" >
+		<property name="fidelityTradeFilesManager" ref="FidelityTradeFilesManager" />
+		<property name="tradeKingTradeFilesManager" ref="TradeKingTradeFilesManager" />
+	</bean>
+	
+	<bean id="FidelityTradeFilesManager" class="com.moneymachine.spring.DataLoader.tradeaggregator.TradeFilesManager" >
+		<property name="filesDirectory" value="//home//eagle//dataloader//trades//fidelity" />
+		<property name="tradeFileReader" ref="FidelityTradeFileReader" />
+	</bean>
+	
+	<bean id="FidelityTradeFileReader" class="com.moneymachine.spring.DataLoader.tradeaggregator.FidelityTradeFileReader" >
+	</bean>
+	
+	
+	<bean id="TradeKingTradeFilesManager" class="com.moneymachine.spring.DataLoader.tradeaggregator.TradeFilesManager" >
+		<property name="filesDirectory" value="//home//eagle//dataloader//trades//tradeking" />
+		<property name="tradeFileReader" ref="TradeKingTradeFileReader" />
+	</bean>
+	<bean id="TradeKingTradeFileReader" class="com.moneymachine.spring.DataLoader.tradeaggregator.TradeKingTradeFileReader" >
+	</bean>
+	
+	<!--  Latest price data Loader beans -->
+	
+	<bean id="LatestPriceLoader" class="com.moneymachine.spring.DataLoader.latestprice.LatestPriceLoader" init-method="init">
+	</bean>
+	
+	<bean id="LatestPriceCSVFileReader" class="com.moneymachine.spring.DataLoader.latestprice.LatestPriceCSVFileReader">
+		<property name="fileName" value="/home/eagle/stagingdata/realtime/quotes1.csv" />
+	</bean>
+	
+	<!--  FX Rate data Loader beans -->
+	
+	<bean id="FXRateCSVFileReader" class="com.moneymachine.spring.DataLoader.latestprice.fxrate.FXRateCSVFileReader">
+		<property name="fileName" value="/home/eagle/stagingdata/realtime/fxrates.csv" />
+	</bean>
+	
+	
+	<bean id="MongoDBClientFactory" class="com.moneymachine.spring.mongodb.MongoDBClientFactory" scope="singleton" init-method="init"
+	destroy-method="destroy">
+		<property name="host" value="locahost" />
+		<property name="port" value="27017" />
+		<property name="database" value="test" />
+	</bean>
+	
+	<bean id="MongoDBQueryAdapter" class="com.moneymachine.spring.mongodb.MongoDBQueryAdapter" init-method="init"
+	destroy-method="destroy">
+		<property name="MongoDBClientFactory" ref="MongoDBClientFactory" />
+	</bean>
+	
+	<!-- bean id="MessageProducer" class="com.moneymachine.spring.objectpersistanceserviceclient.MessagePublisherTest" init-method="init">
+	</bean-->
+		
+	<!--  bean id="MessageConsumer" class="com.moneymachine.spring.objectpersistanceserviceclient.MessageConsumerTest" init-method="init" depends-on="MessageProducer">
+	</bean-->
+	
+		
+	<!-- Connection Factory -->
+	<!-- bean id="connectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+    	<property name="brokerURL" value="tcp://localhost:61616" />
+	</bean-->
+	
+	<bean id="FCFECalcRequestBuilder" class="com.moneymachine.spring.DataLoader.valmodel.fcfe.FCFECalcRequestBuilder" init-method="init"  depends-on="ObjectPersistanceServiceClient">
+		<property name="mongoDBQueryAdapter" ref="MongoDBQueryAdapter"/>
+	</bean>
+	
+	
+	<bean id="IncomeStmtTransformer" class="com.moneymachine.spring.transform.DataMatrixTransformer" init-method="init" >
+		<property name="name" value="IncomeStmtTransformer"/>
+		<property name="mongoDBQueryAdapter" ref="MongoDBQueryAdapter"/>
+		<property name="objectPersistanceServiceClient" ref="ObjectPersistanceServiceClient"/>
+		<property name="sourceCollection" value="ROWANNINCOMESTMT"/>
+		<property name="persistablePojoClass" value="com.moneymachine.spring.DataLoader.finstmt.AnnualIncomeStmtPojo"/>
+		<property name="persistablePojoItemClass" value="com.moneymachine.spring.DataLoader.finstmt.IncomeStmtFacts"/>
+		
+		<!-- mapping between income statement facts fields to data matrix attribute -->
+		<property name="fieldMapping">
+		<util:map map-class="java.util.HashMap">
+				<entry value="year" key="year"/>
+				<entry value="Net Revenues" key="revenue"/>
+				<entry value="Cost of Goods Sold" key="cogs"/>
+				<entry value="Depreciation And Amortization" key="depreciationandamortization"/>
+				<entry value="Gross Income" key="grossincome"/>
+				<entry value="Total Operating Expenses" key="totaloperatingexpense"/>
+				<entry value="Operating Income" key="operatingincome"/>
+				<entry value="Pre-Tax Income" key="pretaxincomeafterinterest"/>
+				<entry value="Income Taxes" key="incometax"/>
+				<entry value="Net Income" key="netincome"/>
+				<entry value="EPS" key="earningpershare"/>
+				<entry value="Shares To Calculate EPS" key="outstandingshares"/>
+		</util:map>
+	  </property>
+	</bean>
+	
+	<bean id="BalanceSheetTransformer" class="com.moneymachine.spring.transform.DataMatrixTransformer" init-method="init" >
+		<property name="name" value="BalanceSheetTransformer"/>
+		<property name="mongoDBQueryAdapter" ref="MongoDBQueryAdapter"/>
+		<property name="objectPersistanceServiceClient" ref="ObjectPersistanceServiceClient"/>
+		<property name="sourceCollection" value="ROWANNBALANCESHEET"/>
+		<property name="persistablePojoClass" value="com.moneymachine.spring.DataLoader.finstmt.AnnualBalanceSheetPojo"/>
+		<property name="persistablePojoItemClass" value="com.moneymachine.spring.DataLoader.finstmt.BalanceSheetFacts"/>
+		
+		<!-- mapping between income statement facts fields to data matrix attribute -->
+		<property name="fieldMapping">
+		<util:map map-class="java.util.HashMap">
+				<entry value="year" key="year"/>
+				<entry key="cash" value="Cash"/>
+				<entry key="cashandshortterminvestments" value="Cash &amp; Short Term Investments"/>
+				<entry key="receievables" value="Receivables"/>
+				<entry key="invertories" value="Inventories"/>
+				<entry key="currentassets" value="Current Assets"/>
+				<entry key="propertyplanandequipment" value="Property, Plant and Equipment - Gross"/>
+				<entry key="depreciation" value="Depreciation"/>
+				<entry key="intagibleassets" value="Intangible Assets"/>
+				<entry key="totalassets" value="Total Assets"/>
+				<entry key="accountspayable" value="Accounts Payable"/>
+				<entry key="shorttermdebt" value="Short Term Debt"/>
+				<entry key="acruedexpense" value="Accrued Expenses"/>
+				<entry key="totalcurrentliability" value="Other Liabilities"/>
+				<entry key="deferredtaxes" value="Deferred Taxes"/>
+				<entry key="longtermdebt" value="Long Term Debt"/>
+				<entry key="totalliability" value="Total Liabilities"/>
+				<entry key="commonequity" value="Common Equity"/>
+				<entry key="toalshareholderequity" value="Total Shareholder Equity"/>
+				<entry key="commonsharesoutstanding" value="Common Shares Outstanding"/>
+		</util:map>
+	  </property>
+	</bean>
+
+	<bean id="CashFlowStmtTransformer" class="com.moneymachine.spring.transform.DataMatrixTransformer" init-method="init" >
+		<property name="name" value="CashFlowStmtTransformer"/>
+		<property name="mongoDBQueryAdapter" ref="MongoDBQueryAdapter"/>
+		<property name="objectPersistanceServiceClient" ref="ObjectPersistanceServiceClient"/>
+		<property name="sourceCollection" value="ROWANNCASHFLOWSTMT"/>
+		<property name="persistablePojoClass" value="com.moneymachine.spring.DataLoader.finstmt.AnnualCashFlowStmtPojo"/>
+		<property name="persistablePojoItemClass" value="com.moneymachine.spring.DataLoader.finstmt.CashFlowStmtFacts"/>
+		
+		<!-- mapping between income statement facts fields to data matrix attribute -->
+		<property name="fieldMapping">
+		<util:map map-class="java.util.HashMap">
+				<entry value="year" key="year"/>
+				<entry key="netincome" value="Net Income / Starting Line"/>
+				<entry key="depreciation" value="Depreciation"/>
+				<entry key="fundsfromoperations" value="Funds From Operations"/>
+				<entry key="netcashflowoperatingactivities" value="Net Cash Flow - Operating Activities"/>
+				<entry key="increaseininvestments" value="Increase In Investments"/>
+				<entry key="decreaseininvestments" value="Decrease In Investments"/>
+				<entry key="capitalexpenditures" value="Capital Expenditures"/>
+				<entry key="netassetsfromacquisitions" value="Net Assets From Acquisitions"/>
+				<entry key="netcashflowinvesting" value="Net Cash Flow Investing"/>
+				<entry key="shorttermborrowings" value="Short Term Borrowings"/>
+				<entry key="longtermborrowings" value="Long Term Borrowings"/>
+				<entry key="longtermdebtreduction" value="Long Term Debt Reduction"/>
+				<entry key="netproceedsstocksale" value="Net Proceeds Stock Sale"/>
+				<entry key="commonpreferredredeemed" value="Common Preferred Redeemed"/>
+				<entry key="commondividends" value="Common Dividends"/>
+				<entry key="cashdividendspaid" value="Cash Dividends Paid - Total"/>
+				<entry key="netcashflowfinancing" value="Net Cash Flow - Financing"/>
+				<entry key="netchangeincash" value="Net Change In Cash"/>
+		</util:map>
+	  </property>
+	</bean>
+	
+	<bean id="QtrIncomeStmtTransformer" class="com.moneymachine.spring.transform.DataMatrixTransformer" init-method="init" >
+		<property name="name" value="IncomeStmtTransformer"/>
+		<property name="mongoDBQueryAdapter" ref="MongoDBQueryAdapter"/>
+		<property name="objectPersistanceServiceClient" ref="ObjectPersistanceServiceClient"/>
+		<property name="sourceCollection" value="ROWQTRINCOMESTMT"/>
+		<property name="persistablePojoClass" value="com.moneymachine.spring.DataLoader.finstmt.QuarterlyIncomeStmtPojo"/>
+		<property name="persistablePojoItemClass" value="com.moneymachine.spring.DataLoader.finstmt.IncomeStmtFacts"/>
+		
+		<!-- mapping between income statement facts fields to data matrix attribute -->
+		<property name="fieldMapping">
+		<util:map map-class="java.util.HashMap">
+				<entry value="quarter" key="yearquarter"/>
+				<entry value="Net Revenues" key="revenue"/>
+				<entry value="Cost of Goods Sold" key="cogs"/>
+				<entry value="Depreciation And Amortization" key="depreciationandamortization"/>
+				<entry value="Gross Income" key="grossincome"/>
+				<entry value="Total Operating Expenses" key="totaloperatingexpense"/>
+				<entry value="Operating Income" key="operatingincome"/>
+				<entry value="Pre-Tax Income" key="pretaxincomeafterinterest"/>
+				<entry value="Income Taxes" key="incometax"/>
+				<entry value="Net Income" key="netincome"/>
+				<entry value="EPS" key="earningpershare"/>
+				<entry value="Shares To Calculate EPS" key="outstandingshares"/>
+		</util:map>
+	  </property>
+	</bean>
+	
+	<bean id="QtrBalanceSheetTransformer" class="com.moneymachine.spring.transform.DataMatrixTransformer" init-method="init" >
+		<property name="name" value="BalanceSheetTransformer"/>
+		<property name="mongoDBQueryAdapter" ref="MongoDBQueryAdapter"/>
+		<property name="objectPersistanceServiceClient" ref="ObjectPersistanceServiceClient"/>
+		<property name="sourceCollection" value="ROWQTRBALANCESHEET"/>
+		<property name="persistablePojoClass" value="com.moneymachine.spring.DataLoader.finstmt.QuarterlyBalanceSheetPojo"/>
+		<property name="persistablePojoItemClass" value="com.moneymachine.spring.DataLoader.finstmt.BalanceSheetFacts"/>
+		
+		<!-- mapping between income statement facts fields to data matrix attribute -->
+		<property name="fieldMapping">
+		<util:map map-class="java.util.HashMap">
+				<entry key="yearquarter" value="quarter"/>
+				<entry key="cash" value="Cash"/>
+				<entry key="cashandshortterminvestments" value="Cash &amp; Short Term Investments"/>
+				<entry key="receievables" value="Receivables"/>
+				<entry key="invertories" value="Inventories"/>
+				<entry key="currentassets" value="Current Assets"/>
+				<entry key="propertyplanandequipment" value="Property, Plant and Equipment - Gross"/>
+				<entry key="depreciation" value="Depreciation"/>
+				<entry key="intagibleassets" value="Intangible Assets"/>
+				<entry key="totalassets" value="Total Assets"/>
+				<entry key="accountspayable" value="Accounts Payable"/>
+				<entry key="shorttermdebt" value="Short Term Debt"/>
+				<entry key="acruedexpense" value="Accrued Expenses"/>
+				<entry key="totalcurrentliability" value="Other Liabilities"/>
+				<entry key="deferredtaxes" value="Deferred Taxes"/>
+				<entry key="longtermdebt" value="Long Term Debt"/>
+				<entry key="totalliability" value="Total Liabilities"/>
+				<entry key="commonequity" value="Common Equity"/>
+				<entry key="toalshareholderequity" value="Total Shareholder Equity"/>
+				<entry key="commonsharesoutstanding" value="Common Shares Outstanding"/>
+		</util:map>
+	  </property>
+	</bean>
+
+	<bean id="QtrCashFlowStmtTransformer" class="com.moneymachine.spring.transform.DataMatrixTransformer" init-method="init" >
+		<property name="name" value="CashFlowStmtTransformer"/>
+		<property name="mongoDBQueryAdapter" ref="MongoDBQueryAdapter"/>
+		<property name="objectPersistanceServiceClient" ref="ObjectPersistanceServiceClient"/>
+		<property name="sourceCollection" value="ROWQTRCASHFLOWSTMT"/>
+		<property name="persistablePojoClass" value="com.moneymachine.spring.DataLoader.finstmt.QuarterlyCashFlowStmtPojo"/>
+		<property name="persistablePojoItemClass" value="com.moneymachine.spring.DataLoader.finstmt.CashFlowStmtFacts"/>
+		
+		<!-- mapping between income statement facts fields to data matrix attribute -->
+		<property name="fieldMapping">
+		<util:map map-class="java.util.HashMap">
+				<entry key="yearquarter" value="quarter"/>
+				<entry key="netincome" value="Net Income / Starting Line"/>
+				<entry key="depreciation" value="Depreciation"/>
+				<entry key="fundsfromoperations" value="Funds From Operations"/>
+				<entry key="netcashflowoperatingactivities" value="Net Cash Flow - Operating Activities"/>
+				<entry key="increaseininvestments" value="Increase In Investments"/>
+				<entry key="decreaseininvestments" value="Decrease In Investments"/>
+				<entry key="capitalexpenditures" value="Capital Expenditures"/>
+				<entry key="netassetsfromacquisitions" value="Net Assets From Acquisitions"/>
+				<entry key="netcashflowinvesting" value="Net Cash Flow Investing"/>
+				<entry key="shorttermborrowings" value="Short Term Borrowings"/>
+				<entry key="longtermborrowings" value="Long Term Borrowings"/>
+				<entry key="longtermdebtreduction" value="Long Term Debt Reduction"/>
+				<entry key="netproceedsstocksale" value="Net Proceeds Stock Sale"/>
+				<entry key="commonpreferredredeemed" value="Common Preferred Redeemed"/>
+				<entry key="commondividends" value="Common Dividends"/>
+				<entry key="cashdividendspaid" value="Cash Dividends Paid - Total"/>
+				<entry key="netcashflowfinancing" value="Net Cash Flow - Financing"/>
+				<entry key="netchangeincash" value="Net Change In Cash"/>
+		</util:map>
+	  </property>
+	</bean>
+	
+	
+	
+	
+</beans>
